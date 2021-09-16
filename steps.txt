@@ -1,0 +1,2 @@
+INSTALL TOP-TABS TAP-VIEW AND reanimated
+npm install @react-navigation/material-top-tabs react-native-tab-view react-native-reanimated
