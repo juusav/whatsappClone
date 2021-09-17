@@ -11,6 +11,7 @@ import {
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
+import { Fontisto } from "@expo/vector-icons";
 import { ColorSchemeName, Pressable } from "react-native";
 import { View } from "../components/Themed";
 
@@ -22,7 +23,7 @@ import TabOneScreen from "../screens/TabOneScreen";
 import TabTwoScreen from "../screens/TabTwoScreen";
 import {
   RootStackParamList,
-  RootTabParamList,
+  MainTabParamList,
   RootTabScreenProps,
 } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
@@ -52,8 +53,8 @@ function RootNavigator() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerShadowVisible:false,
-        headerStyle: { backgroundColor: Colors.light.tint,},
+        headerShadowVisible: false,
+        headerStyle: { backgroundColor: Colors.light.tint },
         headerTitleStyle: { color: "#ffffff" },
         headerTitleAlign: "left",
       }}
@@ -98,49 +99,36 @@ function RootNavigator() {
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
  * https://reactnavigation.org/docs/bottom-tab-navigator
  */
-const BottomTab = createMaterialTopTabNavigator<RootTabParamList>();
+const BottomTab = createMaterialTopTabNavigator<MainTabParamList>();
 
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="Chats"
       tabBarOptions={{
-        labelStyle: {fontSize: 15, fontWeight: "bold"},
+        labelStyle: { fontSize: 15, fontWeight: "bold" },
         activeTintColor: "#ffffff",
         style: { backgroundColor: Colors[colorScheme].tint },
         indicatorStyle: { backgroundColor: "#ffffff" },
+        showIcon: true,
+        tabBarPressColor: "#ffffff",
       }}
     >
       <BottomTab.Screen
         name="Camera"
         component={TabOneScreen}
         options={{
-          
+          tabBarLabel: () => null,
+          tabBarIcon: ({ color }) => (
+            <Fontisto name="camera" color={color} size={18} />
+          ),
         }}
       />
-      <BottomTab.Screen
-        name="Chats"
-        component={TabTwoScreen}
-        options={{
-          
-        }}
-      />
-      <BottomTab.Screen
-        name="Status"
-        component={TabTwoScreen}
-        options={{
-          
-        }}
-      />
-      <BottomTab.Screen
-        name="Calls"
-        component={TabTwoScreen}
-        options={{
-      
-        }}
-      />
+      <BottomTab.Screen name="Chats" component={TabTwoScreen} />
+      <BottomTab.Screen name="Status" component={TabTwoScreen} />
+      <BottomTab.Screen name="Calls" component={TabTwoScreen} />
     </BottomTab.Navigator>
   );
 }
