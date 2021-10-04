@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableWithoutFeedback } from "react-native";
 import { ChatRoom } from "../../types";
 import styles from "./styles";
 import moment from "moment";
@@ -10,10 +10,15 @@ export type ChatListItemProps = {
 
 const ChatListItem = (props: ChatListItemProps) => {
   const { chatRoom } = props;
-  const user = chatRoom.users[1];
+  const user = chatRoom.users[0];
+
+  const onClick = () => {
+    console.warn("clicked on ${user.name}")
+  }
 
   return (
-    <View style={styles.container}>
+    <TouchableWithoutFeedback onPress={onClick}>
+      <View style={styles.container}>
       <View style={styles.leftContainer} >
         <Image source={{ uri: user.imageUri }} style={styles.avatar} />
 
@@ -27,6 +32,7 @@ const ChatListItem = (props: ChatListItemProps) => {
         {moment(chatRoom.lastMessage.createdAt).format("DD/MM/YYYY")}
       </Text>
     </View>
+    </TouchableWithoutFeedback>
   );
 };
 
