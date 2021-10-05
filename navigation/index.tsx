@@ -1,4 +1,4 @@
-import { Octicons, MaterialCommunityIcons, } from "@expo/vector-icons";
+import { Octicons, MaterialCommunityIcons, MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -6,6 +6,7 @@ import * as React from "react";
 import { Fontisto } from "@expo/vector-icons";
 import { ColorSchemeName} from "react-native";
 import { View } from "../components/Themed";
+import { useRoute } from '@react-navigation/native';
 
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
@@ -65,7 +66,24 @@ function RootNavigator() {
           ),
         }}
       />
-      <Stack.Screen name="ChatRoom" component={ChatRoomScreen} options={{ title: "Chat Room" }} />
+      <Stack.Screen name="ChatRoom" component={ChatRoomScreen} 
+        options={({ route }) => ({ 
+          title: route.params.name,
+          headerRight: () => (
+            <View
+              style={{
+                flexDirection: "row",
+                width: 100,
+                justifyContent: "space-between",
+              }}
+            >
+              <FontAwesome5 name="video" size={21} color={'white'} />
+              <MaterialIcons name="call" size={22} color={'white'} />
+              <MaterialCommunityIcons name="dots-vertical" size={22} color={'white'} />
+            </View>
+          )
+        }) } 
+      />
       <Stack.Group screenOptions={{ presentation: "modal" }}> 
         <Stack.Screen name="Modal" component={ModalScreen} />
       </Stack.Group>
