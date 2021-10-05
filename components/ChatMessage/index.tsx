@@ -19,13 +19,17 @@ const ChatMessage = (props: ChatMessageProps) => {
     return (
         <View style={styles.container}>
             <View style={[
-                styles.messageBox,
-                {backgroundColor: isMyMessage() ? '#DCF8C5' : 'white' }
+                styles.messageBox, {
+                    backgroundColor: isMyMessage() ? '#DCF8C5' : 'white',
+                    marginLeft: isMyMessage() ? 50 : 0,
+                    marginRight: isMyMessage() ? 0 : 50,
+                }
               ]}
             >
-                <Text>{message.user.name}</Text>
-                <Text>{message.content}</Text>
-                <Text>{moment(message.createdAt).fromNow()}</Text>
+                {/* Conditional render */}
+                {!isMyMessage () && <Text style={styles.name}>{message.user.name}</Text> } 
+                <Text style={styles.message}>{message.content}</Text>
+                <Text style={styles.time}>{moment(message.createdAt).fromNow()}</Text>
             </View>
         </View>
     )
