@@ -1,32 +1,20 @@
-import {
-  FontAwesome,
-  Octicons,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
+import { Octicons, MaterialCommunityIcons, } from "@expo/vector-icons";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import {
-  NavigationContainer,
-  DefaultTheme,
-  DarkTheme,
-} from "@react-navigation/native";
+import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
 import { Fontisto } from "@expo/vector-icons";
-import { ColorSchemeName, Pressable } from "react-native";
+import { ColorSchemeName} from "react-native";
 import { View } from "../components/Themed";
 
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import ModalScreen from "../screens/ModalScreen";
-import NotFoundScreen from "../screens/NotFoundScreen";
 import ChatsScreen from "../screens/ChatsScreen";
 import TabTwoScreen from "../screens/TabTwoScreen";
-import {
-  RootStackParamList,
-  MainTabParamList,
-  RootTabScreenProps,
-} from "../types";
+import { RootStackParamList, MainTabParamList } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
+import ChatRoomScreen from "../screens/ChatRoomScreen";
 
 export default function Navigation({
   colorScheme,
@@ -43,12 +31,7 @@ export default function Navigation({
   );
 }
 
-/**
- * A root stack navigator is often used for displaying modals on top of all other content.
- * https://reactnavigation.org/docs/modal
- */
 const Stack = createNativeStackNavigator<RootStackParamList>();
-
 function RootNavigator() {
   return (
     <Stack.Navigator
@@ -59,9 +42,7 @@ function RootNavigator() {
         headerTitleAlign: "left",
       }}
     >
-      <Stack.Screen
-        name="Root"
-        component={BottomTabNavigator}
+      <Stack.Screen name="Root" component={BottomTabNavigator}
         options={{
           title: "WhatsApp",
           headerRight: () => (
@@ -79,41 +60,30 @@ function RootNavigator() {
                 size={22}
                 color={"white"}
               />
+              
             </View>
           ),
         }}
       />
-      <Stack.Screen
-        name="NotFound"
-        component={NotFoundScreen}
-        options={{ title: "Oops!" }}
-      />
-      <Stack.Group screenOptions={{ presentation: "modal" }}>
+      <Stack.Screen name="ChatRoom" component={ChatRoomScreen} options={{ title: "Chat Room" }} />
+      <Stack.Group screenOptions={{ presentation: "modal" }}> 
         <Stack.Screen name="Modal" component={ModalScreen} />
       </Stack.Group>
     </Stack.Navigator>
   );
 }
 
-/**
- * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
- * https://reactnavigation.org/docs/bottom-tab-navigator
- */
 const BottomTab = createMaterialTopTabNavigator<MainTabParamList>();
-
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
 
   return (
     <BottomTab.Navigator
       initialRouteName="Chats"
-      tabBarOptions={{
-        labelStyle: { fontSize: 15, fontWeight: "bold" },
-        activeTintColor: "#ffffff",
-        style: { backgroundColor: Colors[colorScheme].tint },
-        indicatorStyle: { backgroundColor: "#ffffff" },
-        showIcon: true,
-        tabBarPressColor: "#ffffff",
+      screenOptions={{
+        tabBarLabelStyle: { fontSize: 15, fontWeight: "bold", color: "white" },
+        tabBarStyle: {backgroundColor: Colors[colorScheme].tint},
+        tabBarIndicatorStyle: {backgroundColor: "white"},
       }}
     >
       <BottomTab.Screen
@@ -121,8 +91,8 @@ function BottomTabNavigator() {
         component={TabTwoScreen}
         options={{
           tabBarLabel: () => null,
-          tabBarIcon: ({ color }) => (
-            <Fontisto name="camera" color={color} size={18} />
+          tabBarIcon: () => (
+            <Fontisto name="camera" color="white" size={18} />
           ),
         }}
       />
@@ -131,14 +101,4 @@ function BottomTabNavigator() {
       <BottomTab.Screen name="Calls" component={TabTwoScreen} />
     </BottomTab.Navigator>
   );
-}
-
-/**
- * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
- */
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>["name"];
-  color: string;
-}) {
-  return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
 }

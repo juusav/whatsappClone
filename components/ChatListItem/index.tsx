@@ -3,17 +3,20 @@ import { View, Text, Image, TouchableWithoutFeedback } from "react-native";
 import { ChatRoom } from "../../types";
 import styles from "./styles";
 import moment from "moment";
+import { useNavigation } from "@react-navigation/native";
 
 export type ChatListItemProps = {
-  chatRoom: ChatRoom;
+  chatRoom: ChatRoom; //name : types;
 };
 
 const ChatListItem = (props: ChatListItemProps) => {
   const { chatRoom } = props;
-  const user = chatRoom.users[0];
+  const navigation = useNavigation();
+
+  const user = chatRoom.users[1];
 
   const onClick = () => {
-    console.warn("clicked on ${user.name}")
+    navigation.navigate('ChatRoom');
   }
 
   return (
