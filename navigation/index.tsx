@@ -10,18 +10,14 @@ import { useRoute } from '@react-navigation/native';
 
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
-import ModalScreen from "../screens/ModalScreen";
 import ChatsScreen from "../screens/ChatsScreen";
 import TabTwoScreen from "../screens/TabTwoScreen";
 import { RootStackParamList, MainTabParamList } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
 import ChatRoomScreen from "../screens/ChatRoomScreen";
+import ContactsScreen from "../screens/ContactsScreen";
 
-export default function Navigation({
-  colorScheme,
-}: {
-  colorScheme: ColorSchemeName;
-}) {
+export default function Navigation({colorScheme,}: {colorScheme: ColorSchemeName;}) {
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
@@ -84,9 +80,7 @@ function RootNavigator() {
           )
         }) } 
       />
-      <Stack.Group screenOptions={{ presentation: "modal" }}> 
-        <Stack.Screen name="Modal" component={ModalScreen} />
-      </Stack.Group>
+      <Stack.Screen name="Contacts" component={ContactsScreen} />
     </Stack.Navigator>
   );
 }
