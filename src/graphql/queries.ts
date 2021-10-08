@@ -16,6 +16,19 @@ export const getUser = /* GraphQL */ `
           chatRoomID
           createdAt
           updatedAt
+          chatRoom{
+            id
+            chatRoomUsers{
+              items{
+                user{
+                  id
+                  name
+                  imageUri
+                  status
+                }
+              }
+            }
+          }
         }
         nextToken
       }
