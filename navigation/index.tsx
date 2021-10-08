@@ -37,6 +37,7 @@ function RootNavigator() {
         headerStyle: { backgroundColor: Colors.light.tint },
         headerTitleStyle: { color: "#ffffff" },
         headerTitleAlign: "left",
+        headerTintColor: 'white',
       }}
     >
       <Stack.Screen name="Root" component={BottomTabNavigator}
